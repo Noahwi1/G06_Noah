@@ -10,4 +10,6 @@ c. Abstract
 
 d. Introduction
 
+E. Methods
+
  
