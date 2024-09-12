@@ -22,5 +22,5 @@ more text
 
 And even more Text.... 
 
+Feedback: Exercises were fun to do, with some hiccups, and took us about 2 hours. The most difficult part was to organize everything within our group to keep everyone on the same page. 
 
- 
