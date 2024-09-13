@@ -93,7 +93,8 @@ summary(lm(EM ~ Sex + Extraversion + fMRI_hipp_neg_neu, data=mydata))
 repdata <- read.table("repdata.txt", header=T, sep="\t")
 repdata <- subset(repdata, Filter==0)
 
-
+#Filter Part 1: potentially separating the power analysis from the quality checks, 
+#and combining reliability, validity and objectivity in one script. 
 
 
 
