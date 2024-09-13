@@ -23,5 +23,22 @@ pwr.r.test(n = 250, r = 0.5, sig.level = 0.05, power = NULL,
            alternative = c("two.sided", "less", "greater"))
 #for 0.1 -> pwr = 0.35, for 0.998 -> pwr = 1, for 0.5 -> pwr = 1
 
+#Exercise 4
 
+mydata <- read.table(file.choose(), header=T, sep="\t")
+
+View(mydata)
+dim(mydata)
+summary(mydata)
+head(mydata)
+
+#There is a column «Filter», delete all participants with the entry «1».
+#How many participants are left after removing all with Filter = 1?
+mydata$Sex <- as.factor(mydata$Sex)
+mydata$Filter <- as.factor(mydata$Filter)
+summary(mydata)
+
+mydata <- subset(mydata, Filter == 0)
+nrow(mydata)
+#833 participants are left after removing low quality data
            
