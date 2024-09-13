@@ -29,5 +29,7 @@ And even more Text....
 Feedback: Exercises were fun to do, with some hiccups, and took us about 2 hours. The most difficult part was to organize everything within our group to keep everyone on the same page. 
 
 Feedback: Das readme erklrt sehr schön, was bei R passiert/gerechnet wurde und ist gut strukturiert und dadurch übersichtlich. 
-In R fehlen jedoch noch einige Berechnungen. 
+
+The whole exercise took about 2 hours to complete and was fun and insightful, while at the same time being a little tricky. 
+
 
