@@ -68,10 +68,11 @@ summary(mydata$EM_LD)
 #to be expected. 
 
 
-
-
-
-
+#Aggregation: Since the SD and LD memory performance are highly correlated, 
+#you can calculate also the average memory performance for the downstream analysis 
+#for both samples.
+mydata$EM <- (mydata$EM_SD + mydata$EM_LD)/2
+(mydata$EM_SD + mydata$EM_LD)/2
 
 
 
