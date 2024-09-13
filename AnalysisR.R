@@ -32,7 +32,7 @@ dim(mydata)
 summary(mydata)
 head(mydata)
 
-#There is a column «Filter», delete all participants with the entry «1».
+#Quality: There is a column «Filter», delete all participants with the entry «1».
 #How many participants are left after removing all with Filter = 1?
 mydata$Sex <- as.factor(mydata$Sex)
 mydata$Filter <- as.factor(mydata$Filter)
@@ -41,4 +41,41 @@ summary(mydata)
 mydata <- subset(mydata, Filter == 0)
 nrow(mydata)
 #833 participants are left after removing low quality data
+
+#Validation: If you look at the testosterone values, does the differences
+#between the two sex groups makes sense? Which group are males, which group are
+#females? Do you see the same pattern in the smaller replication sample?
+t.test(mydata$Testosteron ~ mydata$Sex)
+plot(mydata$Testosteron ~ mydata$Sex)
+summary(mydata$Testosteron[mydata$Sex==0])
+summary(mydata$Testosteron[mydata$Sex==1])
+#mean in group 0 = 1.22, mean in group 1 = 23.2 (0 = fem, 1 = male)
+mydata$Sex_ch <- factor(mydata$Sex, levels=c(0,1), labels=c("female", "male"))
+summary(mydata)
+summary(lm(Extraversion ~ Sex, data=mydata))
+
+#Reliability: For the memory data, you have a repeated measurement (SD = short
+#delay, after 10 min & LD = long delay – after 1 day). How high is the correlation
+#between these two measurements? Is there a performance difference between SD and LD?
+#Does this make sense?
+cor(mydata$EM_SD, mydata$EM_LD, use="pairwise")
+t.test(mydata$EM_SD, mydata$EM_LD)
+summary(mydata$EM_SD)
+summary(mydata$EM_LD)
+#correlation between these measurements is 0.857, and the performance difference 
+#is significant with a p-value = 2.2e-16. It makes sense that there is not a perfect 
+#but good correlation, because of the 1 day delay. The performance difference is also
+#to be expected. 
+
+
+
+
+
+
+
+
+
+
+
+
            
