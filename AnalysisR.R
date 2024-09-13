@@ -72,7 +72,18 @@ summary(mydata$EM_LD)
 #you can calculate also the average memory performance for the downstream analysis 
 #for both samples.
 mydata$EM <- (mydata$EM_SD + mydata$EM_LD)/2
-(mydata$EM_SD + mydata$EM_LD)/2
+plot(density(mydata$EM_SD), main="Compare EM SD and LD", frame.plot=F)
+lines(density(mydata$EM_LD), col="red")
+lines(density(mydata$EM), col="green")
+
+#Validation: There is fMRI-data available from the hippocampus and amygdala, 
+#comparing the fMRI signal between negative and neutral pictures. The two brain 
+#regions should be closely related. How high is the correlation between the two 
+#brain signals? Does this make sense? Is it the same in both samples?
+cor(mydata$fMRI_amy_neg_neu, mydata$fMRI_hipp_neg_neu)
+plot(mydata$fMRI_amy_neg_neu, mydata$fMRI_hipp_neg_neu, pch=19)
+abline(lm(mydata$fMRI_hipp_neg_neu ~ mydata$fMRI_amy_neg_neu))
+#correlation is 0.75
 
 
 
