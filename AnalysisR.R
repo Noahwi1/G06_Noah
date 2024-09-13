@@ -83,7 +83,15 @@ lines(density(mydata$EM), col="green")
 cor(mydata$fMRI_amy_neg_neu, mydata$fMRI_hipp_neg_neu)
 plot(mydata$fMRI_amy_neg_neu, mydata$fMRI_hipp_neg_neu, pch=19)
 abline(lm(mydata$fMRI_hipp_neg_neu ~ mydata$fMRI_amy_neg_neu))
+summary(lm(EM ~ Sex + Extraversion + fMRI_hipp_neg_neu, data=mydata))
 #correlation is 0.75
+
+#Statistical analysis: After finishing your validation and reliability checks, 
+#filtering of the data and also the building of new (averaged) behavioral data, 
+#you start to think about a hypothesis you can test and replicate in your datasets.
+#Add an appropriate statistical analysis to your script and run and replicate this analysis.
+repdata <- read.table("repdata.txt", header=T, sep="\t")
+repdata <- subset(repdata, Filter==0)
 
 
 
