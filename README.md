@@ -33,9 +33,7 @@ Before using the data for our statistical analysis, quality checks were ensured,
 
 
 ##  F. Results
-After being left with only hugh quality data, we were able to indeitify a significant distinction in testosterone levels between males and females, with the mean in the male group being 23.2 and in the female group 1.22. 
-Additionally, we found a correlation between the performance difference in SD and LD, which is in line with our hyppothesis. 
-WIth the data on the amygdala as well as on the hippocampus, we were able to identify a close correlation (0.74) between these two brain regions. This is to be expected, as they are both responsible for processing emotional memories. 
+After being left with only high quality data, we were able to indeitify a significant distinction in testosterone levels between males and females, with the mean in the male group being 23.2 and in the female group 1.22. Additionally, we found a significant correlation between the performance difference in SD and LD, which is to be expected. WIth the data on the amygdala as well as on the hippocampus, we were able to identify a close correlation (0.74) between these two brain regions. Since they are both responsible for processing emotional memories, a strong correlation was expected. Lastly, episodic memory performance as well as extraversion were strongly associated with amygdala activation (extraversion: p-value = 0, EM_LD: p-value = 0), which is in line with our hypothesis and further corroborates the existing research. 
 
 ## G. Discussion
 The findings of this study provide compelling evidence that extraversion significantly predicts differences in amygdala activation during long-term memory retrieval. As hypothesized, individuals with higher levels of extraversion exhibited greater activation in the amygdala, even after controlling for long-term memory performance. These results align with existing research suggesting that extraversion is linked to heightened sensitivity to emotionally salient stimuli, and they extend this understanding to the domain of memory retrieval, particularly within the neural architecture supporting emotional memory processing.
