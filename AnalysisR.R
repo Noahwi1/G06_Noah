@@ -1,4 +1,4 @@
-###Poweranalysis
+#Analysis
 install.packages("pwr")
 library(pwr)
 #test different power analysis for significance level 0.1, 0.3 and 0.5
@@ -23,7 +23,7 @@ pwr.r.test(n = 250, r = 0.5, sig.level = 0.05, power = NULL,
            alternative = c("two.sided", "less", "greater"))
 #for 0.1 -> pwr = 0.35, for 0.998 -> pwr = 1, for 0.5 -> pwr = 1
 
-###Quality check and reading in data
+#Exercise 4
 
 mydata <- read.table(file.choose(), header=T, sep="\t")
 
@@ -42,8 +42,7 @@ mydata <- subset(mydata, Filter == 0)
 nrow(mydata)
 #833 participants are left after removing low quality data
 
-###Validation: 
-#If you look at the testosterone values, does the differences
+#Validation: If you look at the testosterone values, does the differences
 #between the two sex groups makes sense? Which group are males, which group are
 #females? Do you see the same pattern in the smaller replication sample?
 t.test(mydata$Testosteron ~ mydata$Sex)
@@ -82,8 +81,7 @@ repdata$Sex_ch <- factor(repdata$Sex, levels=c(0,1), labels=c("female", "male"))
 summary(repdata)
 
 
-###Reliability: 
-#For the memory data, you have a repeated measurement (SD = short
+#Reliability: For the memory data, you have a repeated measurement (SD = short
 #delay, after 10 min & LD = long delay – after 1 day). How high is the correlation
 #between these two measurements? Is there a performance difference between SD and LD?
 #Does this make sense?
@@ -103,8 +101,7 @@ summary(repdata$EM_SD) #mean 28.17
 summary(repdata$EM_LD) #mean 23.46 > showing the same pattern
 
 
-###Aggregation: 
-#Since the SD and LD memory performance are highly correlated, 
+#Aggregation: Since the SD and LD memory performance are highly correlated, 
 #you can calculate also the average memory performance for the downstream analysis 
 #for both samples.
 mydata$EM <- (mydata$EM_SD + mydata$EM_LD)/2
@@ -118,8 +115,7 @@ plot(density(repdata$EM_SD), main="Compare EM SD and LD", frame.plot=F)
 lines(density(repdata$EM_LD), col="red")
 lines(density(repdata$EM), col="green")
 
-###Validation: 
-#There is fMRI-data available from the hippocampus and amygdala, 
+#Validation: There is fMRI-data available from the hippocampus and amygdala, 
 #comparing the fMRI signal between negative and neutral pictures. The two brain 
 #regions should be closely related. How high is the correlation between the two 
 #brain signals? Does this make sense? Is it the same in both samples?
@@ -137,24 +133,114 @@ abline(lm(repdata$fMRI_hipp_neg_neu ~ repdata$fMRI_amy_neg_neu))
 summary(lm(EM ~ Sex_ch + Extraversion + fMRI_hipp_neg_neu, data=repdata))
 #Same as mydata
 
-###Statistical analysis: 
-#After finishing your validation and reliability checks, 
+#Statistical analysis: After finishing your validation and reliability checks, 
 #filtering of the data and also the building of new (averaged) behavioral data, 
 #you start to think about a hypothesis you can test and replicate in your datasets.
-#Add an appropriate statistical analysis to your script and run and replicate this analysis.
-#Hypothesis: Extrav and WM correlate positively
-correlation <- cor(mydata$EM_SD, mydata$Extraversion) #corr. = 0.0256
-plot(mydata$EM_SD ~ mydata$Extraversion)
-cor.test(mydata$EM_SD, mydata$Extraversion)
+
+#Research Question: Does extraversion predict differences in amygdala activation during long-term memory tasks?
+model <- lm(fMRI_amy_neg_neu ~ Extraversion + EM_LD, data = mydata)
+summary(model)
+# Residuals vs Fitted plot
+plot(model)
+# Normal Q-Q plot for residuals
+qqnorm(resid(model))
+qqline(resid(model))
+#Results: yes, Extraversion and long-term memory performance are good predictors
+#in Amygdala activation. 
+
+#Sensitivity analysis: rerun the whole steps with the entire sample without applying 
+#the initial filter.
+mydata <- read.table(file.choose(), header=T, sep="\t")
+
+View(mydata)
+dim(mydata)
+summary(mydata)
+head(mydata)
+
+#repdata: 
+repdata <- read.table(file.choose(), header=T, sep="\t")
+
+View(repdata)
+dim(repdata)
+summary(repdata)
+head(repdata)
+
+#Validation:
+t.test(mydata$Testosteron ~ mydata$Sex)
+plot(mydata$Testosteron ~ mydata$Sex)
+summary(mydata$Testosteron[mydata$Sex==0])
+summary(mydata$Testosteron[mydata$Sex==1])
+#no difference in mean value and p-value 
+
+#repdata: 
+t.test(repdata$Testosteron ~ repdata$Sex)
+plot(repdata$Testosteron ~ repdata$Sex)
+summary(repdata$Testosteron[repdata$Sex==0])
+summary(repdata$Testosteron[repdata$Sex==1])
+#no changes in the rep data either
+
+#Reliability: 
+cor(mydata$EM_SD, mydata$EM_LD, use="pairwise")
+t.test(mydata$EM_SD, mydata$EM_LD)
+summary(mydata$EM_SD)
+summary(mydata$EM_LD)
+#correlation is slightly lower with the exact same p-value
+
+#repdata:
+cor(repdata$EM_SD, repdata$EM_LD, use="pairwise") #correlation slightly higher
+t.test(repdata$EM_SD, repdata$EM_LD) #as well as the p-value being slightly smaller
+summary(repdata$EM_SD)
+summary(repdata$EM_LD) 
+
+#Aggregation:
+mydata$EM <- (mydata$EM_SD + mydata$EM_LD)/2
+plot(density(mydata$EM_SD), main="Compare EM SD and LD", frame.plot=F)
+lines(density(mydata$EM_LD), col="red")
+lines(density(mydata$EM), col="green")
+
+#repdata:
+repdata$EM <- (repdata$EM_SD + repdata$EM_LD)/2
+plot(density(repdata$EM_SD), main="Compare EM SD and LD", frame.plot=F)
+lines(density(repdata$EM_LD), col="red")
+lines(density(repdata$EM), col="green")
+
+#Validation:
+cor(mydata$fMRI_amy_neg_neu, mydata$fMRI_hipp_neg_neu)
+plot(mydata$fMRI_amy_neg_neu, mydata$fMRI_hipp_neg_neu, pch=19)
+abline(lm(mydata$fMRI_hipp_neg_neu ~ mydata$fMRI_amy_neg_neu))
+summary(lm(EM ~ Sex + Extraversion + fMRI_hipp_neg_neu, data=mydata))
+#correlation is slightly lower
+
+#repdata
+cor(repdata$fMRI_amy_neg_neu, repdata$fMRI_hipp_neg_neu)
+plot(repdata$fMRI_amy_neg_neu, repdata$fMRI_hipp_neg_neu, pch=19)
+abline(lm(repdata$fMRI_hipp_neg_neu ~ repdata$fMRI_amy_neg_neu))
+#correlation is slightly higher
+
+#Main analysis:
+
+#Research Question: Does extraversion predict differences in amygdala activation during long-term memory tasks?
+model <- lm(fMRI_amy_neg_neu ~ Extraversion + EM_LD, data = mydata)
+summary(model)
+# Residuals vs Fitted plot
+plot(model)
+# Normal Q-Q plot for residuals
+qqnorm(resid(model))
+qqline(resid(model))
+#Results: yes, Extraversion and long-term memory performance are good predictors
+#in Amygdala activation, even in the sensitivity analysis. 
+
+#repdata:
+model <- lm(fMRI_amy_neg_neu ~ Extraversion + EM_LD, data = repdata)
+summary(model)
+# Residuals vs Fitted plot
+plot(model)
+# Normal Q-Q plot for residuals
+qqnorm(resid(model))
+qqline(resid(model))
+#Results: yes, Extraversion and long-term memory performance are good predictors
+#in Amygdala activation, even in the sensitivity analysis plus the replication analysis.  
 
 
-#replication
-correlation <- cor(repdata$EM_SD, repdata$Extraversion) #corr. = 
-plot(repdata$EM_SD ~ redpata$Extraversion)
-cor.test(repdata$EM_SD, repdata$Extraversion)
 
 
-
-
-
-           
