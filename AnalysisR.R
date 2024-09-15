@@ -55,6 +55,8 @@ summary(mydata)
 summary(lm(Extraversion ~ Sex, data=mydata))
 
 #repdata:
+repdata <- read.table(file.choose(), header=T, sep="\t")
+
 View(repdata)
 dim(repdata)
 summary(repdata)
