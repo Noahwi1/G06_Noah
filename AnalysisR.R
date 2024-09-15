@@ -1,4 +1,4 @@
-#Analysis
+###Poweranalysis
 install.packages("pwr")
 library(pwr)
 #test different power analysis for significance level 0.1, 0.3 and 0.5
@@ -23,7 +23,7 @@ pwr.r.test(n = 250, r = 0.5, sig.level = 0.05, power = NULL,
            alternative = c("two.sided", "less", "greater"))
 #for 0.1 -> pwr = 0.35, for 0.998 -> pwr = 1, for 0.5 -> pwr = 1
 
-#Exercise 4
+###Quality check and reading in data
 
 mydata <- read.table(file.choose(), header=T, sep="\t")
 
@@ -42,7 +42,8 @@ mydata <- subset(mydata, Filter == 0)
 nrow(mydata)
 #833 participants are left after removing low quality data
 
-#Validation: If you look at the testosterone values, does the differences
+###Validation: 
+#If you look at the testosterone values, does the differences
 #between the two sex groups makes sense? Which group are males, which group are
 #females? Do you see the same pattern in the smaller replication sample?
 t.test(mydata$Testosteron ~ mydata$Sex)
@@ -81,7 +82,8 @@ repdata$Sex_ch <- factor(repdata$Sex, levels=c(0,1), labels=c("female", "male"))
 summary(repdata)
 
 
-#Reliability: For the memory data, you have a repeated measurement (SD = short
+###Reliability: 
+#For the memory data, you have a repeated measurement (SD = short
 #delay, after 10 min & LD = long delay – after 1 day). How high is the correlation
 #between these two measurements? Is there a performance difference between SD and LD?
 #Does this make sense?
@@ -101,7 +103,8 @@ summary(repdata$EM_SD) #mean 28.17
 summary(repdata$EM_LD) #mean 23.46 > showing the same pattern
 
 
-#Aggregation: Since the SD and LD memory performance are highly correlated, 
+###Aggregation: 
+#Since the SD and LD memory performance are highly correlated, 
 #you can calculate also the average memory performance for the downstream analysis 
 #for both samples.
 mydata$EM <- (mydata$EM_SD + mydata$EM_LD)/2
@@ -115,7 +118,8 @@ plot(density(repdata$EM_SD), main="Compare EM SD and LD", frame.plot=F)
 lines(density(repdata$EM_LD), col="red")
 lines(density(repdata$EM), col="green")
 
-#Validation: There is fMRI-data available from the hippocampus and amygdala, 
+###Validation: 
+#There is fMRI-data available from the hippocampus and amygdala, 
 #comparing the fMRI signal between negative and neutral pictures. The two brain 
 #regions should be closely related. How high is the correlation between the two 
 #brain signals? Does this make sense? Is it the same in both samples?
@@ -133,7 +137,8 @@ abline(lm(repdata$fMRI_hipp_neg_neu ~ repdata$fMRI_amy_neg_neu))
 summary(lm(EM ~ Sex_ch + Extraversion + fMRI_hipp_neg_neu, data=repdata))
 #Same as mydata
 
-#Statistical analysis: After finishing your validation and reliability checks, 
+###Statistical analysis: 
+#After finishing your validation and reliability checks, 
 #filtering of the data and also the building of new (averaged) behavioral data, 
 #you start to think about a hypothesis you can test and replicate in your datasets.
 #Add an appropriate statistical analysis to your script and run and replicate this analysis.
@@ -143,8 +148,11 @@ plot(mydata$EM_SD ~ mydata$Extraversion)
 cor.test(mydata$EM_SD, mydata$Extraversion)
 
 
-#Filter Part 1: potentially separating the power analysis from the quality checks, 
-#and combining reliability, validity and objectivity in one script. 
+#replication
+correlation <- cor(repdata$EM_SD, repdata$Extraversion) #corr. = 
+plot(repdata$EM_SD ~ redpata$Extraversion)
+cor.test(repdata$EM_SD, repdata$Extraversion)
+
 
 
 
