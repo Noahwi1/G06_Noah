@@ -8,6 +8,8 @@
 
 ## d. Introduction
 
+Does extraversion predict differences in amygdala activation during long-term memory tasks?
+
 ## E. Methods
 Having done several power analysis, we were able to idenitfy the correct number of participants needed for our replication. After acquiring the raw data, we cleansed it of off low quality data and ended up with 833 participants. For statistical analysis we used the statictical programm R and for the correlations we used the standard Welch T-Test. All plots and graphs were also made with R. 
 
